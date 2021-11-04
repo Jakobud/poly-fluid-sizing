@@ -14,12 +14,14 @@
 ///   @include poly-fluid-sizing('font-size', (576px: 22px, 768px: 24px, 992px: 34px));
 /// @author Jake Wilson <jake.e.wilson@gmail.com>
 @mixin poly-fluid-sizing($property, $map) {
+  $result: ();
+
   // Get the number of provided breakpoints
   $length: length(map-keys($map));
 
   // Error if the number of breakpoints is < 2
   @if ($length < 2) {
-    @error "poly-fluid-sizing() $map requires at least values"
+    @error "poly-fluid-sizing() $map requires at least two values";
   }
 
   // Sort the map by viewport width (key)
@@ -27,19 +29,40 @@
   $keys: map-keys($map);
 
   // Minimum size
-  #{$property}: map-get($map, nth($keys,1));
+  #{$property}: map-get($map, nth($keys, 1));
 
   // Interpolated size through breakpoints
   @for $i from 1 through ($length - 1) {
-    @media (min-width:nth($keys,$i)) {
-      $value1: map-get($map, nth($keys,$i));
-      $value2: map-get($map, nth($keys,($i + 1)));
-      // If values are not equal, perform linear interpolation
-      @if ($value1 != $value2) {
-        #{$property}: linear-interpolation((nth($keys,$i): $value1, nth($keys,($i+1)): $value2));
-      } @else {
-        #{$property}: $value1;
+    $result: ();
+    $low-values: map-get($map, nth($keys, $i));
+    $high-values: map-get($map, nth($keys, ($i + 1)));
+    $total: length($low-values);
+    $low-separator: list-separator(nth($keys, $i));
+    $high-separator: list-separator(nth($keys, $i + 1));
+
+    @if ($low-separator != $high-separator) {
+      @error "poly-fluid-sizing() values must use the same separator";
+    }
+
+    @media (min-width:nth($keys, $i)) {
+      @if (length($low-values) != length($high-values)) {
+        @error "poly-fluid-sizing() values must have same number args";
       }
+
+      @for $j from 1 through $total {
+        $value1: nth($low-values, $j);
+        $value2: nth($high-values, $j);
+        $key1: nth($keys, $i);
+        $key2: nth($keys, $i + 1);
+
+        @if ($value1 != $value2) {
+          $result: append($result, linear-interpolation(($key1: $value1, $key2: $value2)), $low-separator);
+        } @else {
+          $result: append($result, $value1, $low-separator);
+        }
+      }
+
+      #{$property}: $result;
     }
   }
 
