@@ -54,6 +54,10 @@ Using Poly Fluid Sizing on `font-size` is an obvious use case. But it can be use
 section {
   @include poly-fluid-sizing('margin-right', (768px:40px, 1024px:60px));
 }
+
+blockquote {
+  @include poly-fluid-sizing('padding', (768px:30px 15px, 1024px:50px 25px));
+}
 ```
 
 ## SASS map order
@@ -69,7 +73,6 @@ article {
 ## Limitations
 
 * You can't mix value types. For example, trying to use `2em` `font-size` @ `786px` viewport width. SASS just really won't know what to do mathematically when 1 value is using `em` and the other is using `px`.
-* You can't pass a CSS list of values. For example when specifying `padding: 50px 20px 30px 20px`. If you want different values like this, you need to break it out into individual properties `padding-top`, `padding-right`, etc... I'm pretty sure this could be solved.
 
 ## Coverage
 
