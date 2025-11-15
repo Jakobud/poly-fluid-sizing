@@ -1,3 +1,6 @@
+@use "sass:map";
+@use "list-sort";
+
 /// map-sort
 /// Sort map by keys
 /// @param $map - A SASS map
@@ -5,10 +8,10 @@
 /// @requires function list-sort
 /// @author Jake Wilson <jake.e.wilson@gmail.com>
 @function map-sort($map) {
-  $keys: list-sort(map-keys($map));
+  $keys: list-sort.list-sort(map.keys($map));
   $sortedMap: ();
   @each $key in $keys {
-    $sortedMap: map-merge($sortedMap, ($key: map-get($map, $key)));
+    $sortedMap: map.merge($sortedMap, ($key: map.get($map, $key)));
   }
   @return $sortedMap;
 }
