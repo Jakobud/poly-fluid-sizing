@@ -1,8 +1,11 @@
+@use 'sass:list';
+@use 'sass:map';
+
 // Dependency functions
-@import 'list-remove';
-@import 'list-sort';
-@import 'map-sort';
-@import 'linear-interpolation';
+@use 'list-remove';
+@use 'list-sort';
+@use 'map-sort';
+@use 'linear-interpolation';
 
 /// poly-fluid-sizing
 /// Generate linear interpolated size values through multiple break points
@@ -17,7 +20,7 @@
   $result: ();
 
   // Get the number of provided breakpoints
-  $length: length(map-keys($map));
+  $length: list.length(map.keys($map));
 
   // Error if the number of breakpoints is < 2
   @if ($length < 2) {
@@ -25,40 +28,40 @@
   }
 
   // Sort the map by viewport width (key)
-  $map: map-sort($map);
-  $keys: map-keys($map);
+  $map: map-sort.map-sort($map);
+  $keys: map.keys($map);
 
   // Minimum size
-  #{$property}: map-get($map, nth($keys, 1));
+  #{$property}: map.get($map, list.nth($keys, 1));
 
   // Interpolated size through breakpoints
   @for $i from 1 through ($length - 1) {
     $result: ();
-    $low-values: map-get($map, nth($keys, $i));
-    $high-values: map-get($map, nth($keys, ($i + 1)));
-    $total: length($low-values);
-    $low-separator: list-separator(nth($keys, $i));
-    $high-separator: list-separator(nth($keys, $i + 1));
+    $low-values: map.get($map, list.nth($keys, $i));
+    $high-values: map.get($map, list.nth($keys, ($i + 1)));
+    $total: list.length($low-values);
+    $low-separator: list.separator(list.nth($keys, $i));
+    $high-separator: list.separator(list.nth($keys, $i + 1));
 
     @if ($low-separator != $high-separator) {
       @error "poly-fluid-sizing() values must use the same separator";
     }
 
-    @media (min-width:nth($keys, $i)) {
-      @if (length($low-values) != length($high-values)) {
+    @media (min-width:list.nth($keys, $i)) {
+      @if (list.length($low-values) != list.length($high-values)) {
         @error "poly-fluid-sizing() values must have same number args";
       }
 
       @for $j from 1 through $total {
-        $value1: nth($low-values, $j);
-        $value2: nth($high-values, $j);
-        $key1: nth($keys, $i);
-        $key2: nth($keys, $i + 1);
+        $value1: list.nth($low-values, $j);
+        $value2: list.nth($high-values, $j);
+        $key1: list.nth($keys, $i);
+        $key2: list.nth($keys, $i + 1);
 
         @if ($value1 != $value2) {
-          $result: append($result, linear-interpolation(($key1: $value1, $key2: $value2)), $low-separator);
+          $result: list.append($result, linear-interpolation.linear-interpolation(($key1: $value1, $key2: $value2)), $low-separator);
         } @else {
-          $result: append($result, $value1, $low-separator);
+          $result: list.append($result, $value1, $low-separator);
         }
       }
 
@@ -67,7 +70,7 @@
   }
 
   // Maxmimum size
-  @media (min-width:nth($keys,$length)) {
-    #{$property}: map-get($map, nth($keys,$length));
+  @media (min-width:list.nth($keys,$length)) {
+    #{$property}: map.get($map, list.nth($keys,$length));
   }
 }

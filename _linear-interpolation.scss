@@ -1,3 +1,5 @@
+@use "sass:list";
+@use "sass:map";
 @use "sass:math";
 
 /// linear-interpolation
@@ -8,15 +10,15 @@
 ///   font-size: linear-interpolation((320px: 18px, 768px: 26px));
 /// @author Jake Wilson <jake.e.wilson@gmail.com>
 @function linear-interpolation($map) {
-  $keys: map-keys($map);
-  @if (length($keys) != 2) {
+  $keys: map.keys($map);
+  @if (list.length($keys) != 2) {
     @error "linear-interpolation() $map must be exactly 2 values";
   }
   // The slope
-  $m: math.div(map-get($map, nth($keys, 2)) - map-get($map, nth($keys, 1)), nth($keys, 2) - nth($keys,1));
+  $m: math.div(map.get($map, list.nth($keys, 2)) - map.get($map, list.nth($keys, 1)), list.nth($keys, 2) - list.nth($keys,1));
 
   // The y-intercept
-  $b: map-get($map, nth($keys, 1)) - $m * nth($keys, 1);
+  $b: map.get($map, list.nth($keys, 1)) - $m * list.nth($keys, 1);
 
   // Determine if the sign should be positive or negative
   $sign: "+";
