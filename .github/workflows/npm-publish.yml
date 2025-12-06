@@ -1,4 +1,6 @@
-on: push
+on:
+  release:
+    types: [published]
 
 jobs:
   publish:
@@ -8,8 +10,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      #- run: npm install
-      #- run: npm test
+      # - run: npm install # Dependencies are often needed for the publish step
+      # - run: npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
