@@ -3,6 +3,7 @@
 
 /// map-sort
 /// Sort map by keys
+/// Only works for numeric keys that can be compared with < operator
 /// @param $map - A SASS map
 /// @returns A SASS map sorted by keys
 /// @requires function list-sort
