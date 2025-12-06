@@ -10,7 +10,7 @@
   $newList: ();
   @for $i from 1 through list.length($list) {
     @if $i != $index {
-      $newList: list.append($newList, list.nth($list,$i), 'space');
+      $newList: list.append($newList, list.nth($list, $i), $separator: list.separator($list));
     }
   }
   @return $newList;

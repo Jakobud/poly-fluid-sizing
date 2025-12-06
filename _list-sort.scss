@@ -16,7 +16,7 @@
         $value: $item;
       }
     }
-    $sortedlist: list.append($sortedlist, $value, 'space');
+    $sortedlist: list.append($sortedlist, $value, $separator: list.separator($list));
     $list: list-remove.list-remove($list, list.index($list, $value));
   }
   @return $sortedlist;
