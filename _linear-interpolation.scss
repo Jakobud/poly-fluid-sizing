@@ -1,6 +1,6 @@
-@use "sass:list";
-@use "sass:map";
-@use "sass:math";
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
 
 /// linear-interpolation
 /// Calculate the definition of a line between two points
@@ -15,17 +15,17 @@
     @error "linear-interpolation() $map must be exactly 2 values";
   }
   // The slope
-  $m: math.div(map.get($map, list.nth($keys, 2)) - map.get($map, list.nth($keys, 1)), list.nth($keys, 2) - list.nth($keys,1));
+  $m: math.div(map.get($map, list.nth($keys, 2)) - map.get($map, list.nth($keys, 1)), list.nth($keys, 2) - list.nth($keys, 1));
 
   // The y-intercept
   $b: map.get($map, list.nth($keys, 1)) - $m * list.nth($keys, 1);
 
   // Determine if the sign should be positive or negative
-  $sign: "+";
+  $sign: '+';
   @if ($b < 0) {
-    $sign: "-";
+    $sign: '-';
     $b: abs($b);
   }
 
-  @return calc(#{$m*100}vw #{$sign} #{$b});
+  @return calc(#{$m * 100}vw #{$sign} #{$b});
 }

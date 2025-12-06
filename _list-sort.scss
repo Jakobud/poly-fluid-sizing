@@ -1,5 +1,5 @@
-@use "sass:list";
-@use "list-remove";
+@use 'sass:list';
+@use 'list-remove';
 
 /// list-sort
 /// Sort a SASS list
@@ -10,7 +10,7 @@
 @function list-sort($list) {
   $sortedlist: ();
   @while list.length($list) > 0 {
-    $value: list.nth($list,1);
+    $value: list.nth($list, 1);
     @each $item in $list {
       @if $item < $value {
         $value: $item;

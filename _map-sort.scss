@@ -1,5 +1,5 @@
-@use "sass:map";
-@use "list-sort";
+@use 'sass:map';
+@use 'list-sort';
 
 /// map-sort
 /// Sort map by keys
@@ -11,7 +11,12 @@
   $keys: list-sort.list-sort(map.keys($map));
   $sortedMap: ();
   @each $key in $keys {
-    $sortedMap: map.merge($sortedMap, ($key: map.get($map, $key)));
+    $sortedMap: map.merge(
+      $sortedMap,
+      (
+        $key: map.get($map, $key),
+      )
+    );
   }
   @return $sortedMap;
 }

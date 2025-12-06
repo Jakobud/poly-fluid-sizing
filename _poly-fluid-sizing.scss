@@ -47,7 +47,7 @@
       @error "poly-fluid-sizing() values must use the same separator";
     }
 
-    @media (min-width:list.nth($keys, $i)) {
+    @media (min-width: list.nth($keys, $i)) {
       @if (list.length($low-values) != list.length($high-values)) {
         @error "poly-fluid-sizing() values must have same number args";
       }
@@ -59,7 +59,16 @@
         $key2: list.nth($keys, $i + 1);
 
         @if ($value1 != $value2) {
-          $result: list.append($result, linear-interpolation.linear-interpolation(($key1: $value1, $key2: $value2)), $low-separator);
+          $result: list.append(
+            $result,
+            linear-interpolation.linear-interpolation(
+              (
+                $key1: $value1,
+                $key2: $value2,
+              )
+            ),
+            $low-separator
+          );
         } @else {
           $result: list.append($result, $value1, $low-separator);
         }
@@ -70,7 +79,7 @@
   }
 
   // Maxmimum size
-  @media (min-width:list.nth($keys,$length)) {
-    #{$property}: map.get($map, list.nth($keys,$length));
+  @media (min-width: list.nth($keys,$length)) {
+    #{$property}: map.get($map, list.nth($keys, $length));
   }
 }
