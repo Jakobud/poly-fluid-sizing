@@ -2,7 +2,7 @@
 @use '../linear-interpolation' as *;
 
 @include describe('linear-interpolation function') {
-  @include it('Interpolates values linearly between two points') {
+  @include it('Interpolates values linearly between two points with default rounding') {
     @include assert {
       @include output {
         div {
@@ -11,6 +11,159 @@
               320px: 18px,
               768px: 26px,
             )
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(1.786vw + 12.286px);
+        }
+      }
+    }
+  }
+
+  @include it('Interpolates values rounding to 10 decimal places') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            true,
+            10
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(1.7857142857vw + 12.2857142857px);
+        }
+      }
+    }
+  }
+
+  @include it('Interpolates values rounding to 3 decimal places') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            true,
+            3
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(1.786vw + 12.286px);
+        }
+      }
+    }
+  }
+
+  @include it('Interpolates values rounding to 2 decimal places') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            true,
+            2
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(1.79vw + 12.29px);
+        }
+      }
+    }
+  }
+
+  @include it('Interpolates values rounding to 1 decimal place') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            true,
+            1
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(1.8vw + 12.3px);
+        }
+      }
+    }
+  }
+
+  @include it('Interpolates values rounding to 0 decimal place') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            true,
+            0
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(2vw + 12px);
+        }
+      }
+    }
+  }
+
+  @include it('Ensures negative rounding decimal places are treated as zero') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            true,
+            -1
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(2vw + 12px);
+        }
+      }
+    }
+  }
+
+  @include it('Interpolates values with rounding disabled') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            ),
+            false
           );
         }
       }
