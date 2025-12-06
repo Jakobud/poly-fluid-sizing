@@ -4,7 +4,7 @@
   "description": "SASS mixin for linear interpolation between multiple values across multiple breakpoints using CSS calc() and viewport units",
   "main": "_poly-fluid-sizing.scss",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest --watch"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,10 @@
   "bugs": {
     "url": "https://github.com/Jakobud/poly-fluid-sizing/issues"
   },
-  "homepage": "https://github.com/Jakobud/poly-fluid-sizing"
+  "homepage": "https://github.com/Jakobud/poly-fluid-sizing",
+  "devDependencies": {
+    "sass": "^1.94.2",
+    "sass-true": "~8.0.0",
+    "vitest": "^4.0.12"
+  }
 }
