@@ -19,12 +19,12 @@
         div {
           font-size: 22px;
         }
-        @media (min-width: 576px) {
+        @media (width >= 576px) {
           div {
             font-size: calc(1.042vw + 16px);
           }
         }
-        @media (min-width: 768px) {
+        @media (width >= 768px) {
           div {
             font-size: 24px;
           }
@@ -51,17 +51,17 @@
         div {
           font-size: 22px;
         }
-        @media (min-width: 576px) {
+        @media (width >= 576px) {
           div {
             font-size: calc(1.042vw + 16px);
           }
         }
-        @media (min-width: 768px) {
+        @media (width >= 768px) {
           div {
             font-size: calc(4.464vw - 10.286px);
           }
         }
-        @media (min-width: 992px) {
+        @media (width >= 992px) {
           div {
             font-size: 34px;
           }
@@ -87,12 +87,12 @@
         div {
           padding: 30px 15px;
         }
-        @media (min-width: 768px) {
+        @media (width >= 768px) {
           div {
             padding: calc(7.813vw - 30px) calc(3.906vw - 15px);
           }
         }
-        @media (min-width: 1024px) {
+        @media (width >= 1024px) {
           div {
             padding: 50px 25px;
           }
@@ -119,17 +119,17 @@
         div {
           font-size: 22px;
         }
-        @media (min-width: 576px) {
+        @media (width >= 576px) {
           div {
             font-size: calc(1.042vw + 16px);
           }
         }
-        @media (min-width: 768px) {
+        @media (width >= 768px) {
           div {
             font-size: calc(4.464vw - 10.286px);
           }
         }
-        @media (min-width: 992px) {
+        @media (width >= 992px) {
           div {
             font-size: 34px;
           }
@@ -148,7 +148,9 @@
               576px: 22px,
               768px: 24px,
             ),
-            false
+            (
+              round: false,
+            )
           );
         }
       }
@@ -156,12 +158,12 @@
         div {
           font-size: 22px;
         }
-        @media (min-width: 576px) {
+        @media (width >= 576px) {
           div {
             font-size: calc(1.0416666667vw + 16px);
           }
         }
-        @media (min-width: 768px) {
+        @media (width >= 768px) {
           div {
             font-size: 24px;
           }
@@ -180,8 +182,44 @@
               576px: 22px,
               768px: 24px,
             ),
-            true,
-            5
+            (
+              round: true,
+              precision: 5,
+            )
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: 22px;
+        }
+        @media (width >= 576px) {
+          div {
+            font-size: calc(1.04167vw + 16px);
+          }
+        }
+        @media (width >= 768px) {
+          div {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  @include it('Can use older media query syntax') {
+    @include assert {
+      @include output {
+        div {
+          @include poly-fluid-sizing(
+            'font-size',
+            (
+              576px: 22px,
+              768px: 24px,
+            ),
+            (
+              rangeContext: false,
+            )
           );
         }
       }
@@ -191,7 +229,7 @@
         }
         @media (min-width: 576px) {
           div {
-            font-size: calc(1.04167vw + 16px);
+            font-size: calc(1.042vw + 16px);
           }
         }
         @media (min-width: 768px) {

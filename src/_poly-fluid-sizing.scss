@@ -11,16 +11,16 @@
 /// Generate linear interpolated size values through multiple break points
 /// @param $property - A string CSS property name
 /// @param $map - A SASS map of viewport unit and size value pairs
-/// @param $round - Whether to round the output values (default: true)
-/// @param $precision - The number of decimal places to round to (default: 3)
+/// @param $options - A SASS map of options
+///  round - Whether to round the output values (default: true)
+///  precision - The number of decimal places to round to (default: 3)
+///  rangeContext - Whether to use Media Query Level 4 Range Context syntax (default: true)
 /// @requires function linear-interpolation
 /// @requires function map-sort
 /// @example
 ///   @include poly-fluid-sizing('font-size', (576px: 22px, 768px: 24px, 992px: 34px));
 /// @author Jake Wilson <jake.e.wilson@gmail.com>
-@mixin poly-fluid-sizing($property, $map, $round: true, $precision: 3) {
-  $result: ();
-
+@mixin poly-fluid-sizing($property, $map, $options: ()) {
   // Get the number of provided breakpoints
   $length: list.length(map.keys($map));
 
@@ -28,6 +28,29 @@
   @if ($length < 2) {
     @error "poly-fluid-sizing() $map requires at least two values";
   }
+
+  // Merging default options
+  $options: map.merge(
+    (
+      round: true,
+      precision: 3,
+      rangeContext: true,
+    ),
+    $options
+  );
+
+  // Extracting options
+  $round: map.get($options, 'round');
+  $precision: map.get($options, 'precision');
+
+  // Determine whether to use Media Query Level 4 Range Context syntax
+  // https://www.w3.org/TR/mediaqueries-4/#mq-range-context
+  $mediaRangeSyntax: 'width >=';
+  @if map.get($options, 'rangeContext') == false {
+    $mediaRangeSyntax: 'min-width:';
+  }
+
+  $result: ();
 
   // Sort the map by viewport width (key)
   $map: map-sort.map-sort($map);
@@ -49,7 +72,7 @@
       @error "poly-fluid-sizing() values must use the same separator";
     }
 
-    @media (min-width: list.nth($keys, $i)) {
+    @media (#{$mediaRangeSyntax} list.nth($keys, $i)) {
       @if (list.length($low-values) != list.length($high-values)) {
         @error "poly-fluid-sizing() values must have same number args";
       }
@@ -83,7 +106,7 @@
   }
 
   // Maxmimum size
-  @media (min-width: list.nth($keys,$length)) {
+  @media (#{$mediaRangeSyntax} list.nth($keys,$length)) {
     #{$property}: map.get($map, list.nth($keys, $length));
   }
 }
