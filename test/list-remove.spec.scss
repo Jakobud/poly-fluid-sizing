@@ -1,0 +1,16 @@
+@use 'pkg:sass-true' as *;
+@use '../list-remove' as *;
+
+@include describe('list-remove function') {
+  @include it('Removes an item from a list at the specified index') {
+    @include assert-equal(list-remove((1, 2, 3, 4, 5), 3), (1, 2, 4, 5));
+  }
+
+  @include it('Removes an item from a list using space separator') {
+    @include assert-equal(list-remove((1 2 3 4 5), 3), (1 2 4 5));
+  }
+
+  @include it('Removes an item from a list using comma separator') {
+    @include assert-equal(list-remove((1, 2, 3, 4, 5), 3), (1, 2, 4, 5));
+  }
+}
