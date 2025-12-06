@@ -1,0 +1,140 @@
+@use 'pkg:sass-true' as *;
+@use '../poly-fluid-sizing' as *;
+
+@include describe('poly-fluid-sizing mixin') {
+  @include it('Generates interpolated styles using two breakpoints') {
+    @include assert {
+      @include output {
+        div {
+          @include poly-fluid-sizing(
+            'font-size',
+            (
+              576px: 22px,
+              768px: 24px,
+            )
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: 22px;
+        }
+        @media (min-width: 576px) {
+          div {
+            font-size: calc(1.0416666667vw + 16px);
+          }
+        }
+        @media (min-width: 768px) {
+          div {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  @include it('Generates interpolated styles using three breakpoints') {
+    @include assert {
+      @include output {
+        div {
+          @include poly-fluid-sizing(
+            'font-size',
+            (
+              576px: 22px,
+              768px: 24px,
+              992px: 34px,
+            )
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: 22px;
+        }
+        @media (min-width: 576px) {
+          div {
+            font-size: calc(1.0416666667vw + 16px);
+          }
+        }
+        @media (min-width: 768px) {
+          div {
+            font-size: calc(4.4642857143vw - 10.2857142857px);
+          }
+        }
+        @media (min-width: 992px) {
+          div {
+            font-size: 34px;
+          }
+        }
+      }
+    }
+  }
+
+  @include it('Generates interpolated styles using a list of values') {
+    @include assert {
+      @include output {
+        div {
+          @include poly-fluid-sizing(
+            'padding',
+            (
+              768px: 30px 15px,
+              1024px: 50px 25px,
+            )
+          );
+        }
+      }
+      @include expect {
+        div {
+          padding: 30px 15px;
+        }
+        @media (min-width: 768px) {
+          div {
+            padding: calc(7.8125vw - 30px) calc(3.90625vw - 15px);
+          }
+        }
+        @media (min-width: 1024px) {
+          div {
+            padding: 50px 25px;
+          }
+        }
+      }
+    }
+  }
+
+  @include it('Generates interpolated styles using breakpoints in non-ascending order') {
+    @include assert {
+      @include output {
+        div {
+          @include poly-fluid-sizing(
+            'font-size',
+            (
+              768px: 24px,
+              992px: 34px,
+              576px: 22px,
+            )
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: 22px;
+        }
+        @media (min-width: 576px) {
+          div {
+            font-size: calc(1.0416666667vw + 16px);
+          }
+        }
+        @media (min-width: 768px) {
+          div {
+            font-size: calc(4.4642857143vw - 10.2857142857px);
+          }
+        }
+        @media (min-width: 992px) {
+          div {
+            font-size: 34px;
+          }
+        }
+      }
+    }
+  }
+}
