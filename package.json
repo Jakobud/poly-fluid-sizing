@@ -2,7 +2,7 @@
   "name": "poly-fluid-sizing",
   "version": "1.2.1",
   "description": "SASS mixin for linear interpolation between multiple values across multiple breakpoints using CSS calc() and viewport units",
-  "main": "_poly-fluid-sizing.scss",
+  "sass": "index.scss",
   "scripts": {
     "test": "vitest --watch"
   },
