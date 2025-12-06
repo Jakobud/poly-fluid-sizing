@@ -1,0 +1,24 @@
+@use 'pkg:sass-true' as *;
+@use '../linear-interpolation' as *;
+
+@include describe('linear-interpolation function') {
+  @include it('Interpolates values linearly between two points') {
+    @include assert {
+      @include output {
+        div {
+          font-size: linear-interpolation(
+            (
+              320px: 18px,
+              768px: 26px,
+            )
+          );
+        }
+      }
+      @include expect {
+        div {
+          font-size: calc(1.7857142857vw + 12.2857142857px);
+        }
+      }
+    }
+  }
+}
