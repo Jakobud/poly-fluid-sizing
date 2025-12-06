@@ -11,12 +11,14 @@
 /// Generate linear interpolated size values through multiple break points
 /// @param $property - A string CSS property name
 /// @param $map - A SASS map of viewport unit and size value pairs
+/// @param $round - Whether to round the output values (default: true)
+/// @param $precision - The number of decimal places to round to (default: 3)
 /// @requires function linear-interpolation
 /// @requires function map-sort
 /// @example
 ///   @include poly-fluid-sizing('font-size', (576px: 22px, 768px: 24px, 992px: 34px));
 /// @author Jake Wilson <jake.e.wilson@gmail.com>
-@mixin poly-fluid-sizing($property, $map) {
+@mixin poly-fluid-sizing($property, $map, $round: true, $precision: 3) {
   $result: ();
 
   // Get the number of provided breakpoints
@@ -65,7 +67,9 @@
               (
                 $key1: $value1,
                 $key2: $value2,
-              )
+              ),
+              $round,
+              $precision
             ),
             $low-separator
           );
