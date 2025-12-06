@@ -1,5 +1,5 @@
 @use 'pkg:sass-true' as *;
-@use '../linear-interpolation' as *;
+@use '../src/linear-interpolation' as *;
 
 @include describe('linear-interpolation function') {
   @include it('Interpolates values linearly between two points with default rounding') {

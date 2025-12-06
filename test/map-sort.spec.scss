@@ -1,5 +1,5 @@
 @use 'pkg:sass-true' as *;
-@use '../map-sort' as *;
+@use '../src/map-sort' as *;
 
 @include describe('map-sort function') {
   @include it('Sorts a map in ascending order of keys') {

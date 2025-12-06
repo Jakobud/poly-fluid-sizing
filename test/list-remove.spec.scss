@@ -1,5 +1,5 @@
 @use 'pkg:sass-true' as *;
-@use '../list-remove' as *;
+@use '../src/list-remove' as *;
 
 @include describe('list-remove function') {
   @include it('Removes an item from a list at the specified index') {

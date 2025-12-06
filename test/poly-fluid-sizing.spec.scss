@@ -1,5 +1,5 @@
 @use 'pkg:sass-true' as *;
-@use '../poly-fluid-sizing' as *;
+@use '../src/poly-fluid-sizing' as *;
 
 @include describe('poly-fluid-sizing mixin') {
   @include it('Generates interpolated styles using two breakpoints') {
